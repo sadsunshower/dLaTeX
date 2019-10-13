@@ -1,0 +1,5 @@
+{
+    "Undefined control sequence." : "Unrecognised LaTeX command / macro. Did you mistype, or forget a package?",
+    "Missing $ inserted." : "Math mode command / macro used outside of math mode. Did you forget a $ or \\[?",
+    "Extra alignment tab has been changed to \\cr." : "This row contains extra column(s). For typing a literal & use \\&, otherwise check your options for the environment."
+}

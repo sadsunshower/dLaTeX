@@ -1,0 +1,4 @@
+testing/*.aux
+testing/*.log
+testing/*.pdf
+__pycache__/
