@@ -76,6 +76,18 @@ if __name__ == '__main__':
                 print(nicer_error(line, errors))
                 print(f'\033[1mLine {num}:\033[0m ' + file[num-1])
                 print(markers(num, pos-1))
+            if line.startswith('Overfull'):
+                num = int(re.search(r'lines ([0-9]+)--', line).group(1))
+                wideness = int(re.search(r'([0-9]+).[0-9]pt too wide', line).group(1))
+                if 'badness' in line or wideness > 50:
+                    error = True
+                    print('\n\033[91m\033[1mLaTeX Error\033[0m')
+                    print('Overfull horizontal box (much too wide). Try reducing the width of the content in this block.')
+                    print(f'\033[1mLine {num}:\033[0m ' + file[num-1])
+                else:
+                    print('\n\033[93m\033[1mLaTeX Warning\033[0m')
+                    print('Overfull horizontal box (slightly too wide). Consider reducing the width of the content in this block.')
+                    print(f'\033[1mLine {num}:\033[0m ' + file[num-1])
         
         if error:
             print('\nErrors detected, output PDF may have unexpected results.')
