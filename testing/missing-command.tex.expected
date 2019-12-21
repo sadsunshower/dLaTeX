@@ -1,0 +1,2 @@
+This is dLaTeX version 0.1
+{"messages": [{"severity": "error", "message": "Unrecognised LaTeX command / macro. Did you mistype, or forget a package?", "line": "The missing command is \\texit{aaaaa} right here", "num": 7, "marker": [28]}], "error": true}

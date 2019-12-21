@@ -1,0 +1,2 @@
+This is dLaTeX version 0.1
+{"messages": [{"severity": "error", "message": "This row contains extra column(s). For typing a literal & use \\&, otherwise check your options for the environment.", "line": "    a & b & c & d \\\\", "num": 8, "marker": [14]}], "error": true}

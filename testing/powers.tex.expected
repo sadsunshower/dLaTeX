@@ -1,0 +1,2 @@
+This is dLaTeX version 0.1
+{"messages": [{"severity": "warning", "message": "Remember to add curly braces {} around powers with more than one symbol.", "line": "It should catch these: $e^-x$", "num": 6, "marker": [25]}, {"severity": "warning", "message": "Remember to add curly braces {} around powers with more than one symbol.", "line": "    3^-x", "num": 9, "marker": [5]}], "error": false}

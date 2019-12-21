@@ -1,4 +1,3 @@
-testing/*.aux
-testing/*.log
-testing/*.pdf
+testing/*.out
 __pycache__/
+venv/

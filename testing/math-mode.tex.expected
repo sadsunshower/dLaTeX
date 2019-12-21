@@ -1,0 +1,2 @@
+This is dLaTeX version 0.1
+{"messages": [{"severity": "error", "message": "Math mode command / macro used outside of math mode. Did you forget a $ or \\[?", "line": "I'm using the symbol \\theta outside math mode", "num": 7, "marker": [26]}], "error": true}
