@@ -1,3 +1,5 @@
 testing/*.out
+web/data/*
+web/static/*.pdf
 __pycache__/
 venv/

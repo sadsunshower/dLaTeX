@@ -6,8 +6,6 @@ import message_generators.all
 import formatters
 
 if __name__ == '__main__':
-    print('This is dLaTeX version 0.1')
-
     if len(sys.argv) == 1:
         print(f'Usage: {sys.argv[0]} (latex file) [json]')
         print('Add \'json\' to get JSON format output')
@@ -24,6 +22,8 @@ if __name__ == '__main__':
 
         if len(sys.argv) == 3 and sys.argv[2] == 'json':
             formatter = formatters.JSONFormatter()
+        else:
+            print('This is dLaTeX version 0.1')
 
         for generator in message_generators.all.all_generators:
             formatter.add_messages(generator.trigger_output(output, file))
