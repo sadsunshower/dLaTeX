@@ -1,4 +1,4 @@
-import os, shutil, subprocess, time, uuid
+import glob, os, shutil, subprocess, threading, time, uuid
 import flask
 
 app = flask.Flask(__name__)
@@ -22,6 +22,12 @@ def process_tex(save, content):
     os.chdir('..')
     return flask.jsonify({'fail' : 'Could not run dLaTeX.'})
 
+def clean_files(save):
+    for file in glob.glob(f'data/{save}.*'):
+        os.remove(file)
+
+    os.remove(f'static/{save}.pdf')
+
 @app.route('/')
 def route_index():
     return flask.render_template('index.html')
@@ -36,6 +42,9 @@ def route_dlatex():
     save = str(uuid.uuid4())
     resp = process_tex(save, flask.request.data.decode('utf-8', 'ignore'))
     shutil.move(f'data/{save}.pdf', f'static/{save}.pdf')
+
+    clean = threading.Timer(15.0, clean_files, args = (save, ))
+    clean.start()
     
     return resp
 
