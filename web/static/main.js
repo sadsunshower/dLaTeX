@@ -29,6 +29,13 @@
 
     setInterval(save, 3000);
 
+    const about = document.querySelector('#about-modal');
+    document.querySelectorAll('.about-toggle').forEach(e => {
+        e.addEventListener('click', () => {
+            about.classList.toggle('is-active');
+        })
+    });
+
     document.querySelector('#submit').addEventListener('click', () => {
         const content = document.querySelector('#content').value;
         save();
@@ -73,6 +80,9 @@
 
             const outputPDF = document.createElement('iframe');
             outputPDF.src = `/static/${json['save']}.pdf`;
+            outputPDF.classList.add('has-ratio');
+            outputPDF.style.width = '100%';
+            outputPDF.style.height = '100%';
             output.appendChild(outputPDF);
         }).catch(console.log);
     });

@@ -5,16 +5,37 @@
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='stylesheet' type='text/css' crossorigin='anonymous' href='https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css' />
     </head>
-    <body>
+    <body class='is-clipped'>
         <section class='section'>
-            <div class='container'>
-                <h1 class='title'>dLaTeX Web</h1>
-                <textarea class='textarea is-family-monospace' id='content'></textarea>
-                <button class='button' id='submit'>Compile &amp; Save</button>
-                <div class='container' id='output'></div>
-                <div class='container' id='messages'></div>
+            <div class='columns'>
+                <div class='column is-half'>
+                    <h1 class='title'>dLaTeX Web</h1>
+                    <p style='margin-bottom: 1.5rem'><button class='button' id='submit'>Compile &amp; Save</button> <button class='button about-toggle'>About</button></p>
+                    <p><textarea class='textarea is-family-monospace' id='content'></textarea></p>
+                    <div style='margin-top: 1.5rem' id='messages'></div>
+                </div>
+                <div class='column'>
+                    <figure class='image is-4by5' id='output'></figure>
+                </div>
             </div>
         </section>
+        <div class='modal' id='about-modal'>
+            <div class='modal-background about-toggle'></div>
+            <div class='modal-card'>
+                <header class='modal-card-head'>
+                    <p class='modal-card-title'>dLaTeX Web Interface</p>
+                    <button class='delete is-large about-toggle' aria-label='close'></button>
+                </header>
+                <section class='modal-card-body'>
+                    <p>Running using dLaTeX 0.1 in the backend.</p>
+                    <p>Type your LaTeX source into the text area on the left, and click compile &amp; save to see the effects. Any error messages will appear the text area.</p>
+                    <p>The LaTeX source is saved to local storage for convenience, <strong>not</strong> on the cloud, so the website cannot serve as a suitable backup.</p>
+                </section>
+                <footer class='modal-card-foot'>
+                    <p>&copy; Nick 2020 &ndash; <a href='https://github.com/sadsunshower/dLaTeX'>GitHub</a></p>
+                </footer>
+            </div>
+        </div>
         <script src='/static/main.js'></script>
     </body>
 </html>
