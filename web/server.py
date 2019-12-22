@@ -3,7 +3,6 @@ import flask
 
 app = flask.Flask(__name__)
 
-saved = {}
 ip_limit = {}
 
 def process_tex(save, content):
@@ -25,7 +24,7 @@ def process_tex(save, content):
 
 @app.route('/')
 def route_index():
-    return flask.render_template('index.html', content = saved[flask.request.cookies['save']] if ('save' in flask.request.cookies and flask.request.cookies['save'] in saved) else '')
+    return flask.render_template('index.html')
 
 @app.route('/dlatex', methods=['POST'])
 def route_dlatex():
@@ -34,18 +33,9 @@ def route_dlatex():
     
     ip_limit[flask.request.remote_addr] = int(time.time())
 
-    save = None
-
-    if not ('save' in flask.request.cookies and flask.request.cookies['save'] in saved):
-        save = str(uuid.uuid4())
-    else:
-        save = flask.request.cookies['save']
-    
-    saved[save] = flask.request.data.decode('utf-8', 'ignore')
-
-    resp = flask.make_response(process_tex(save, flask.request.data.decode('utf-8', 'ignore')))
+    save = str(uuid.uuid4())
+    resp = process_tex(save, flask.request.data.decode('utf-8', 'ignore'))
     shutil.move(f'data/{save}.pdf', f'static/{save}.pdf')
-    resp.set_cookie('save', save)
     
     return resp
 

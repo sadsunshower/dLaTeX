@@ -21,8 +21,17 @@
         return parent;
     };
 
+    document.querySelector('#content').value = localStorage.getItem('saved');
+
+    const save = () => {
+        localStorage.setItem('saved', document.querySelector('#content').value);
+    }
+
+    setInterval(save, 3000);
+
     document.querySelector('#submit').addEventListener('click', () => {
         const content = document.querySelector('#content').value;
+        save();
 
         fetch('/dlatex', {
             method : 'POST',
