@@ -22,7 +22,7 @@ def process_tex(save, content):
     with subprocess.Popen(['../../dlatex.py', f'{save}.tex', 'json'], stdout=subprocess.PIPE) as dlatex:
         reply = dlatex.stdout.read().decode('utf-8', 'ignore')
 
-        pdf = 'true' if os.path.exists(f'data/{save}.pdf') else 'false'
+        pdf = 'true' if os.path.exists(f'{save}.pdf') else 'false'
         reply = reply[:-2] + f', "save": "{save}", "pdf": {pdf}}}'
 
         os.chdir('..')
