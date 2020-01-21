@@ -13,7 +13,7 @@ class GeneratorAutosize(message_generators.generator.Generator):
             if not ('\\left(' + match.group(1) in line or '\\(' + match.group(1) in line):
                 ret.append(messages.Message(
                     messages.PositionInfo((match.start(0), match.end(0)), line, number),
-                    'Did you mean to auto-size these brackets with \\left and \\right?',
+                    'Did you mean to auto-size these brackets with `\\left` and `\\right?`',
                     messages.Severity.WARNING
                 ))
         

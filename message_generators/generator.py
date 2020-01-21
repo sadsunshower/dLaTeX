@@ -45,21 +45,30 @@ class GeneratorLookup(Generator):
                     if curr == len(output):
                         curr = -1
                         break
+
+                msg = re.sub(r'^! ', r'', line)
+                msg = self._error_lookup(msg)
+
+                if len(msg) == 0:
+                    continue
+                
+                if re.search(r'`([^\']*)\'', line):
+                    var = re.search(r'`([^\']*)\'', line).group(1)
+                    msg = re.sub(r'%', var, msg)
                 
                 if curr != -1:
                     num = int(re.search(r'^l.([0-9]+) ', output[curr]).group(1))
                     pos = len(re.sub(r'^l.[0-9]+ ', r'', output[curr]))
-                    msg = re.sub(r'^! ', r'', line)
 
                     ret.append(messages.Message(
                         messages.PositionInfo((pos - 1, ), file[num - 1], num),
-                        self._error_lookup(msg),
+                        msg,
                         messages.Severity.ERROR
                     ))
                 else:
                     ret.append(messages.Message(
                         None,
-                        self._error_lookup(re.sub(r'^! ', r'', line)),
+                        msg,
                         messages.Severity.ERROR
                     ))
 

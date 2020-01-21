@@ -12,7 +12,7 @@ class GeneratorPowers(message_generators.generator.Generator):
         for match in re.finditer(r'\^-', line):
             ret.append(messages.Message(
                 messages.PositionInfo((match.start(0), ), line, number),
-                'Remember to add curly braces {} around powers with more than one symbol.',
+                'Remember to add curly braces `{}` around powers with more than one symbol.',
                 messages.Severity.WARNING
             ))
         
