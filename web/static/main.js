@@ -13,12 +13,37 @@
 
         const body = document.createElement('div');
         body.classList.add('message-body');
-        body.innerText = content;
+        body.appendChild(textWithCode(content));
 
         parent.appendChild(header);
         parent.appendChild(body);
 
         return parent;
+    };
+
+    const textWithCode = (raw) => {
+        const ctr = document.createElement('span');
+        const components = raw.split(/`/);
+
+        let code = false;
+        let codeTag = null;
+
+        for (const comp of components) {
+            if (code) {
+                codeTag.appendChild(document.createTextNode(comp));
+                ctr.appendChild(codeTag);
+
+                code = false;
+                codeTag = null;
+            } else {
+                ctr.appendChild(document.createTextNode(comp));
+
+                code = true;
+                codeTag = document.createElement('code');
+            }
+        }
+
+        return ctr;
     };
 
     document.querySelector('#content').value = localStorage.getItem('saved');
