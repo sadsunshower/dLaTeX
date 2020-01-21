@@ -62,6 +62,10 @@
                     messages.appendChild(createMessage('No errors', 'is-success', 'No errors, output PDF okay.'))
                 }
 
+                if (!json['pdf']) {
+                    messages.appendChild(createMessage('No PDF', 'is-danger', 'LaTeX produced no output PDF, the log file is shown instead.'))
+                }
+
                 for (const message of json['messages']) {
                     let colour = ''; let title = '';
                     switch (message['severity']) {
@@ -79,7 +83,8 @@
             output.innerHTML = '';
 
             const outputPDF = document.createElement('iframe');
-            outputPDF.src = `/static/${json['save']}.pdf`;
+
+            outputPDF.src = `/static/${json['save']}.${json['pdf'] ? 'pdf' : 'txt'}`;
             outputPDF.classList.add('has-ratio');
             outputPDF.style.width = '100%';
             outputPDF.style.height = '100%';

@@ -5,6 +5,14 @@ app = flask.Flask(__name__)
 
 ip_limit = {}
 
+def safe_remove(file):
+    if os.path.exists(file):
+        os.remove(file)
+
+def safe_move(src, dst):
+    if os.path.exists(src):
+        shutil.move(src, dst)
+
 def process_tex(save, content):
     os.chdir('data')
 
@@ -14,7 +22,8 @@ def process_tex(save, content):
     with subprocess.Popen(['../../dlatex.py', f'{save}.tex', 'json'], stdout=subprocess.PIPE) as dlatex:
         reply = dlatex.stdout.read().decode('utf-8', 'ignore')
 
-        reply = reply[:-2] + f', "save": "{save}"}}'
+        pdf = 'true' if os.path.exists(f'data/{save}.pdf') else 'false'
+        reply = reply[:-2] + f', "save": "{save}", "pdf": {pdf}}}'
 
         os.chdir('..')
         return flask.Response(reply, mimetype = 'application/json')
@@ -24,9 +33,10 @@ def process_tex(save, content):
 
 def clean_files(save):
     for file in glob.glob(f'data/{save}.*'):
-        os.remove(file)
+        safe_remove(file)
 
-    os.remove(f'static/{save}.pdf')
+    safe_remove(f'static/{save}.pdf')
+    safe_remove(f'static/{save}.txt')
 
 @app.route('/')
 def route_index():
@@ -41,7 +51,8 @@ def route_dlatex():
 
     save = str(uuid.uuid4())
     resp = process_tex(save, flask.request.data.decode('utf-8', 'ignore'))
-    shutil.move(f'data/{save}.pdf', f'static/{save}.pdf')
+    safe_move(f'data/{save}.pdf', f'static/{save}.pdf')
+    safe_move(f'data/{save}.log', f'static/{save}.txt')
 
     clean = threading.Timer(15.0, clean_files, args = (save, ))
     clean.start()
